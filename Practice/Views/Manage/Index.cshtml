@@ -1,0 +1,537 @@
+﻿@model Practice.Models.Profile
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <!--  This file has been downloaded from https://bootdey.com  -->
+    <!--  All snippets are MIT license https://bootdey.com/license -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .info, .success, .warning, .error, .validation {
+            border: 1px solid;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            padding: 15px 10px 15px 50px;
+            background-repeat: no-repeat;
+            background-position: 10px center;
+        }
+
+        .info {
+            color: #00529B;
+            background-color: #BDE5F8;
+            background-image: url(data:image/png;base64,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);
+        }
+
+        .success {
+            color: #4F8A10;
+            background-color: #DFF2BF;
+            background-image: url(data:image/png;base64,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);
+        }
+
+        .warning {
+            color: #9F6000;
+            background-color: #FEEFB3;
+            background-image: url(data:image/png;base64,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);
+        }
+
+        .error {
+            color: #D8000C;
+            background-color: #FFBABA;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFfElEQVRYw81WaUxUVxjFkJL6RxQV9a8mjdEYXFFccdeAuEJUXBBRVGQRd424RIMabKcxLDGiCUQzAz8g1KCINvZX06T/2qaJTUw0pFBt9M17bzakfD3nzjw6DMOwtIl9ycmbue/ec8797nfvd6NEJOpTIup/YSBv3LjBIgkoBR4BPwK/BN6PAu1Jg+UaioEYoARor1q1Sn64cEFeVVVJx4MH8s7hkI7aWnlVXi7fnz0rlStWCPsF+sf8FwaKiyZNkuZDh0RvahLf8+fie/bMj9ZW8T19Kr6WFvE9eSK+x4/F19wsGkx9k5UlhRMn0kzxvzFg44ze19f3iHkbGsRz/764KyrEZbOJq6zMD/x2V1aK5+FD8TY2qn5vq6ulfNkymrANx0BF49694uGsAA/C7Lp5U1xXr4rryhUxL10S8+JFMbEc5vnzYiL85pkzYp46pX67b98Wr90ubhiq37aNJiqGYsDWsHu3Cqe3rk5cN274BUtKeguePi3GyZNinDghRnGxGEVFYhQUiHH0qBhHjohx7Jh4kBuemhpxbNrUJxL9GShm2DwIo+fePb/guXP+2VHQEgO5UVgoRn6+X/DwYdFzc0U/eFD0nBzR9+0THXlAuK5dE/POHbElJvbKiXAGYpg47yDswQAVTszQhKAJQdMSzMtTggYEDQgaEDQswT17RN+1S/SdO0XfsUP0jAzR09PFhei1l5ZK4YQJYu2OcAYuNyH0HiSPErUEGU5L8MABqVu9+p8ZWoKZmeJYskQJOiHo3LpVnJs3ixOhd6alKTB36jdsoIHL4QxEF8THi3b3rpjHj/cSNPbv9wsiKR3YFXwcWCZ9+/YeQfvChardvmCBXzA1VZwpKaKtWyfa2rWirVmj2v9EEuePH08T0aEGUqoxM/f166IHCQaHlDMMfuxJSWqGdqxtr/bZs5WghkNLg2Ft+XLRkpNFW7pUTawCJqkXauDWdzhsjOxsMaw1DMyQa6gjpOEe+5w5YdudAUENprXFi0VDhDRGB20t4KNeqIEXL5HhSpSC2Lv6li2iW2uItWNYB/N8mDtXPsCYAqLRg1mz1Psn5Bn1Qg389jv3MRJHX79enAgb3TrpfN480UCqzZwpWkJCRHF+jwQnDLzBJKkXauB1G2apYz01OFVi/cA+eXL45UB7pHHkJX8bIkm9PhF4g8QxFi0SJ2fLRKKREPQn3stEmHHkIy/5qRMuAi9+XrlSXEgeg8mCzgxXMOxTpgwqB9gvdKwSBy/5qRMuB2ytyFg39q2Jtdfnz/ebCELYbI/QHgzykZf81KFen3OgHEniQ9a7ESIToeJ66UjAYAQ/g2lXAA/5yOvduFGoE+4ciOYJ9R67wAsTLoTJwA6gc2UkCEokpK3fdownD/nIS/7+TkJVC3iwdOIQ8mLvm9iKPSaGCY4nD/nIW4fl6K8WqGrIetCBfdqJ09ATbAIJNFRY4uQhH3nJH6kaqvvAralTpRNl9iNqgbUcJo5TEho4/wcEhdHfCjt5yEfege4DPTeiGqxfN0pxFwqTD0ezGxXNRAXkPo4oju/sx/4+HOccT54a/2XENqQ7YS3C2IV7wV+48XxE7feiILlxTKuIYD9zW/UA/9nO7+zH/hzH8bX+6jekO2EUnujcsWMryqZNk7eokoLbUTdqRRdC2YkS7cN6coYU45v/2c7v7Mf+HPfl9OlCHvIN1cBnQHz66NFfMXHqWMtJjLuhhW5c17pRQfkObmc/9uc4jicP+YZlAEj8fMSIjLTY2CbMxLDNmCEtCPOvKKmvcRdsxyz55n+28zv7sT/HcfxwDUQDscAXQDKQDuQkjBz5deqoUd9mjhnzMisuri07Lu4Pvvmf7fzOfoH+yYHxsQMuwafE3yvMNwcPRGPIAAAAAElFTkSuQmCC);
+        }
+    </style>
+    <style type="text/css">
+
+
+        body {
+            margin-top: 20px;
+            background: #f5f5f5;
+        }
+        /**
+        * Panels
+        */
+        /*** General styles ***/
+        .panel {
+            box-shadow: none;
+        }
+
+        .panel-heading {
+            border-bottom: 0;
+        }
+
+        .panel-title {
+            font-size: 17px;
+        }
+
+            .panel-title > small {
+                font-size: .75em;
+                color: #999999;
+            }
+
+        .panel-body *:first-child {
+            margin-top: 0;
+        }
+
+        .panel-footer {
+            border-top: 0;
+        }
+
+        .panel-default > .panel-heading {
+            color: #333333;
+            background-color: transparent;
+            border-color: rgba(0, 0, 0, 0.07);
+        }
+
+        form label {
+            color: #999999;
+            font-weight: 400;
+        }
+
+        .form-horizontal .form-group {
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+
+        @@media (min-width: 768px) {
+            .form-horizontal .control-label {
+                text-align: right;
+                margin-bottom: 0;
+                padding-top: 7px;
+            }
+        }
+
+        .profile__contact-info-icon {
+            float: left;
+            font-size: 18px;
+            color: #999999;
+        }
+
+        .profile__contact-info-body {
+            overflow: hidden;
+            padding-left: 20px;
+            color: #999999;
+        }
+
+        .profile-avatar {
+            width: 200px;
+            position: relative;
+            margin: 0px auto;
+            margin-top: 196px;
+            border: 4px solid #f3f3f3;
+        }
+    </style>
+
+</head>
+<body>
+    @if (ViewBag.Message != "welcome")
+    {
+        if (ViewBag.Message == "Confirm and New Password Must Be Matched" || ViewBag.Message == "Unknown Error Occured Try Again Later" || ViewBag.Message == "Username & Current Password Must Be Filled" || ViewBag.Message == "Current Password Must be Matched" || ViewBag.Message == "Username Is Already Taken")
+        {<div class="error">@ViewBag.Message</div>}
+    if (ViewBag.Message == "Profile Updated Successfully")
+    {<div class="success">@ViewBag.Message</div>}
+}
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container bootstrap snippets">
+        <div class="row">
+            <div class="col-xs-12 col-sm-9">
+                @*<form class="form-horizontal" action="SaveProfile" method="POST">*@
+                @using (Html.BeginForm("SaveProfile", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar">
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">User info</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Location</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" id="loc" name="country">
+                                        <option value="">Select country</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="Afghanistan">Afghanistan</option>
+                                        <option value="Albania">Albania</option>
+                                        <option value="Algeria">Algeria</option>
+                                        <option value="American Samoa">American Samoa</option>
+                                        <option value="Andorra">Andorra</option>
+                                        <option value="Angola">Angola</option>
+                                        <option value="Anguilla">Anguilla</option>
+                                        <option value="Antarctica">Antarctica</option>
+                                        <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                        <option value="Argentina">Argentina</option>
+                                        <option value="Armenia">Armenia</option>
+                                        <option value="Aruba">Aruba</option>
+                                        <option value="Australia">Australia</option>
+                                        <option value="Austria">Austria</option>
+                                        <option value="Azerbaijan">Azerbaijan</option>
+                                        <option value="Bahamas">Bahamas</option>
+                                        <option value="Bahrain">Bahrain</option>
+                                        <option value="Bangladesh">Bangladesh</option>
+                                        <option value="Barbados">Barbados</option>
+                                        <option value="Belarus">Belarus</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="Belize">Belize</option>
+                                        <option value="Benin">Benin</option>
+                                        <option value="Bermuda">Bermuda</option>
+                                        <option value="Bhutan">Bhutan</option>
+                                        <option value="Bolivia">Bolivia</option>
+                                        <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+                                        <option value="Botswana">Botswana</option>
+                                        <option value="Bouvet Island">Bouvet Island</option>
+                                        <option value="Brazil">Brazil</option>
+                                        <option value="British Indian Ocean Territory">British Indian Ocean Territory</option>
+                                        <option value="Brunei Darussalam">Brunei Darussalam</option>
+                                        <option value="Bulgaria">Bulgaria</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Burundi">Burundi</option>
+                                        <option value="Cambodia">Cambodia</option>
+                                        <option value="Cameroon">Cameroon</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="Cape Verde">Cape Verde</option>
+                                        <option value="Cayman Islands">Cayman Islands</option>
+                                        <option value="Central African Republic">Central African Republic</option>
+                                        <option value="Chad">Chad</option>
+                                        <option value="Chile">Chile</option>
+                                        <option value="China">China</option>
+                                        <option value="Christmas Island">Christmas Island</option>
+                                        <option value="Cocos (Keeling) Islands">Cocos (Keeling) Islands</option>
+                                        <option value="Colombia">Colombia</option>
+                                        <option value="Comoros">Comoros</option>
+                                        <option value="Congo">Congo</option>
+                                        <option value="Congo, The Democratic Republic of The">Congo, The Democratic Republic of The</option>
+                                        <option value="Cook Islands">Cook Islands</option>
+                                        <option value="Costa Rica">Costa Rica</option>
+                                        <option value="Cote D'ivoire">Cote D'ivoire</option>
+                                        <option value="Croatia">Croatia</option>
+                                        <option value="Cuba">Cuba</option>
+                                        <option value="Cyprus">Cyprus</option>
+                                        <option value="Czech Republic">Czech Republic</option>
+                                        <option value="Denmark">Denmark</option>
+                                        <option value="Djibouti">Djibouti</option>
+                                        <option value="Dominica">Dominica</option>
+                                        <option value="Dominican Republic">Dominican Republic</option>
+                                        <option value="Ecuador">Ecuador</option>
+                                        <option value="Egypt">Egypt</option>
+                                        <option value="El Salvador">El Salvador</option>
+                                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                        <option value="Eritrea">Eritrea</option>
+                                        <option value="Estonia">Estonia</option>
+                                        <option value="Ethiopia">Ethiopia</option>
+                                        <option value="Falkland Islands (Malvinas)">Falkland Islands (Malvinas)</option>
+                                        <option value="Faroe Islands">Faroe Islands</option>
+                                        <option value="Fiji">Fiji</option>
+                                        <option value="Finland">Finland</option>
+                                        <option value="France">France</option>
+                                        <option value="French Guiana">French Guiana</option>
+                                        <option value="French Polynesia">French Polynesia</option>
+                                        <option value="French Southern Territories">French Southern Territories</option>
+                                        <option value="Gabon">Gabon</option>
+                                        <option value="Gambia">Gambia</option>
+                                        <option value="Georgia">Georgia</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Ghana">Ghana</option>
+                                        <option value="Gibraltar">Gibraltar</option>
+                                        <option value="Greece">Greece</option>
+                                        <option value="Greenland">Greenland</option>
+                                        <option value="Grenada">Grenada</option>
+                                        <option value="Guadeloupe">Guadeloupe</option>
+                                        <option value="Guam">Guam</option>
+                                        <option value="Guatemala">Guatemala</option>
+                                        <option value="Guinea">Guinea</option>
+                                        <option value="Guinea-bissau">Guinea-bissau</option>
+                                        <option value="Guyana">Guyana</option>
+                                        <option value="Haiti">Haiti</option>
+                                        <option value="Heard Island and Mcdonald Islands">Heard Island and Mcdonald Islands</option>
+                                        <option value="Holy See (Vatican City State)">Holy See (Vatican City State)</option>
+                                        <option value="Honduras">Honduras</option>
+                                        <option value="Hong Kong">Hong Kong</option>
+                                        <option value="Hungary">Hungary</option>
+                                        <option value="Iceland">Iceland</option>
+                                        <option value="India">India</option>
+                                        <option value="Indonesia">Indonesia</option>
+                                        <option value="Iran, Islamic Republic of">Iran, Islamic Republic of</option>
+                                        <option value="Iraq">Iraq</option>
+                                        <option value="Ireland">Ireland</option>
+                                        <option value="Israel">Israel</option>
+                                        <option value="Italy">Italy</option>
+                                        <option value="Jamaica">Jamaica</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Jordan">Jordan</option>
+                                        <option value="Kazakhstan">Kazakhstan</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="Kiribati">Kiribati</option>
+                                        <option value="Korea, Democratic People's Republic of">Korea, Democratic People's Republic of</option>
+                                        <option value="Korea, Republic of">Korea, Republic of</option>
+                                        <option value="Kuwait">Kuwait</option>
+                                        <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                        <option value="Lao People's Democratic Republic">Lao People's Democratic Republic</option>
+                                        <option value="Latvia">Latvia</option>
+                                        <option value="Lebanon">Lebanon</option>
+                                        <option value="Lesotho">Lesotho</option>
+                                        <option value="Liberia">Liberia</option>
+                                        <option value="Libyan Arab Jamahiriya">Libyan Arab Jamahiriya</option>
+                                        <option value="Liechtenstein">Liechtenstein</option>
+                                        <option value="Lithuania">Lithuania</option>
+                                        <option value="Luxembourg">Luxembourg</option>
+                                        <option value="Macao">Macao</option>
+                                        <option value="Macedonia, The Former Yugoslav Republic of">Macedonia, The Former Yugoslav Republic of</option>
+                                        <option value="Madagascar">Madagascar</option>
+                                        <option value="Malawi">Malawi</option>
+                                        <option value="Malaysia">Malaysia</option>
+                                        <option value="Maldives">Maldives</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Malta">Malta</option>
+                                        <option value="Marshall Islands">Marshall Islands</option>
+                                        <option value="Martinique">Martinique</option>
+                                        <option value="Mauritania">Mauritania</option>
+                                        <option value="Mauritius">Mauritius</option>
+                                        <option value="Mayotte">Mayotte</option>
+                                        <option value="Mexico">Mexico</option>
+                                        <option value="Micronesia, Federated States of">Micronesia, Federated States of</option>
+                                        <option value="Moldova, Republic of">Moldova, Republic of</option>
+                                        <option value="Monaco">Monaco</option>
+                                        <option value="Mongolia">Mongolia</option>
+                                        <option value="Montserrat">Montserrat</option>
+                                        <option value="Morocco">Morocco</option>
+                                        <option value="Mozambique">Mozambique</option>
+                                        <option value="Myanmar">Myanmar</option>
+                                        <option value="Namibia">Namibia</option>
+                                        <option value="Nauru">Nauru</option>
+                                        <option value="Nepal">Nepal</option>
+                                        <option value="Netherlands">Netherlands</option>
+                                        <option value="Netherlands Antilles">Netherlands Antilles</option>
+                                        <option value="New Caledonia">New Caledonia</option>
+                                        <option value="New Zealand">New Zealand</option>
+                                        <option value="Nicaragua">Nicaragua</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Nigeria">Nigeria</option>
+                                        <option value="Niue">Niue</option>
+                                        <option value="Norfolk Island">Norfolk Island</option>
+                                        <option value="Northern Mariana Islands">Northern Mariana Islands</option>
+                                        <option value="Norway">Norway</option>
+                                        <option value="Oman">Oman</option>
+                                        <option selected="selected" value="Pakistan">Pakistan</option>
+                                        <option value="Palau">Palau</option>
+                                        <option value="Palestinian Territory, Occupied">Palestinian Territory, Occupied</option>
+                                        <option value="Panama">Panama</option>
+                                        <option value="Papua New Guinea">Papua New Guinea</option>
+                                        <option value="Paraguay">Paraguay</option>
+                                        <option value="Peru">Peru</option>
+                                        <option value="Philippines">Philippines</option>
+                                        <option value="Pitcairn">Pitcairn</option>
+                                        <option value="Poland">Poland</option>
+                                        <option value="Portugal">Portugal</option>
+                                        <option value="Puerto Rico">Puerto Rico</option>
+                                        <option value="Qatar">Qatar</option>
+                                        <option value="Reunion">Reunion</option>
+                                        <option value="Romania">Romania</option>
+                                        <option value="Russian Federation">Russian Federation</option>
+                                        <option value="Rwanda">Rwanda</option>
+                                        <option value="Saint Helena">Saint Helena</option>
+                                        <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+                                        <option value="Saint Lucia">Saint Lucia</option>
+                                        <option value="Saint Pierre and Miquelon">Saint Pierre and Miquelon</option>
+                                        <option value="Saint Vincent and The Grenadines">Saint Vincent and The Grenadines</option>
+                                        <option value="Samoa">Samoa</option>
+                                        <option value="San Marino">San Marino</option>
+                                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                        <option value="Saudi Arabia">Saudi Arabia</option>
+                                        <option value="Senegal">Senegal</option>
+                                        <option value="Serbia and Montenegro">Serbia and Montenegro</option>
+                                        <option value="Seychelles">Seychelles</option>
+                                        <option value="Sierra Leone">Sierra Leone</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Slovakia">Slovakia</option>
+                                        <option value="Slovenia">Slovenia</option>
+                                        <option value="Solomon Islands">Solomon Islands</option>
+                                        <option value="Somalia">Somalia</option>
+                                        <option value="South Africa">South Africa</option>
+                                        <option value="South Georgia and The South Sandwich Islands">South Georgia and The South Sandwich Islands</option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="Sri Lanka">Sri Lanka</option>
+                                        <option value="Sudan">Sudan</option>
+                                        <option value="Suriname">Suriname</option>
+                                        <option value="Svalbard and Jan Mayen">Svalbard and Jan Mayen</option>
+                                        <option value="Swaziland">Swaziland</option>
+                                        <option value="Sweden">Sweden</option>
+                                        <option value="Switzerland">Switzerland</option>
+                                        <option value="Syrian Arab Republic">Syrian Arab Republic</option>
+                                        <option value="Taiwan, Province of China">Taiwan, Province of China</option>
+                                        <option value="Tajikistan">Tajikistan</option>
+                                        <option value="Tanzania, United Republic of">Tanzania, United Republic of</option>
+                                        <option value="Thailand">Thailand</option>
+                                        <option value="Timor-leste">Timor-leste</option>
+                                        <option value="Togo">Togo</option>
+                                        <option value="Tokelau">Tokelau</option>
+                                        <option value="Tonga">Tonga</option>
+                                        <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                                        <option value="Tunisia">Tunisia</option>
+                                        <option value="Turkey">Turkey</option>
+                                        <option value="Turkmenistan">Turkmenistan</option>
+                                        <option value="Turks and Caicos Islands">Turks and Caicos Islands</option>
+                                        <option value="Tuvalu">Tuvalu</option>
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Ukraine">Ukraine</option>
+                                        <option value="United Arab Emirates">United Arab Emirates</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                        <option value="United States">United States</option>
+                                        <option value="United States Minor Outlying Islands">United States Minor Outlying Islands</option>
+                                        <option value="Uruguay">Uruguay</option>
+                                        <option value="Uzbekistan">Uzbekistan</option>
+                                        <option value="Vanuatu">Vanuatu</option>
+                                        <option value="Venezuela">Venezuela</option>
+                                        <option value="Viet Nam">Viet Nam</option>
+                                        <option value="Virgin Islands, British">Virgin Islands, British</option>
+                                        <option value="Virgin Islands, U.S.">Virgin Islands, U.S.</option>
+                                        <option value="Wallis and Futuna">Wallis and Futuna</option>
+                                        <option value="Western Sahara">Western Sahara</option>
+                                        <option value="Yemen">Yemen</option>
+                                        <option value="Zambia">Zambia</option>
+                                        <option value="Zimbabwe">Zimbabwe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Full Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" value="@Model.Full_Name" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">User Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="uname" value="@Practice.Models.Profile.Username" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Date of Birth</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="dateofbirth" value="@Model.Dateofbirth" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Gender</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" name="gender">
+                                        @if (Model.Gender == "")
+                                        {
+                                            <option selected="selected" value="">Select country</option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        }
+                                        else if (Model.Gender == "Male")
+                                        {
+                                            <option selected="selected" value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        }
+                                        else if (Model.Gender == "Female")
+                                        {
+                                            <option value="Male">Male</option>
+                                            <option selected="selected" value="Female">Female</option>
+                                            <option value="Other">Other</option>
+                                        }
+                                        else if (Model.Gender == "Other")
+                                        {
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                            <option selected="selected" value="Other">Other</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Contact info</h4>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Mobile number</label>
+                                <div class="col-sm-10">
+                                    <input type="tel" name="mobile" value="@Model.Mobile" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">E-mail address</label>
+                                <div class="col-sm-10">
+                                    <input type="email" name="email" value="@Model.Email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Work address</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="3" name="address" class="form-control">@Model.Address</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Security</h4>
+                        </div>
+
+                        <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Current password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="cpassword" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">New password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="newpassword" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Confirm password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="confirm" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-sm-offset-2">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-default">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @*</form>*@
+            </div>
+
+        </div>
+    </div>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+
+    </script>
+</body>
+</html>
